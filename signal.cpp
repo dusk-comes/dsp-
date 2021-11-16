@@ -50,6 +50,6 @@ Wave SinSignal::make_wave(double duration)
                 _angel += _delta;
             });
 
-    return Wave(amps);
+    return Wave(amps, Signal::samplerate());
 }
 

@@ -3,7 +3,8 @@
 
 int main()
 {
-    SinSignal sig(1000, 1, 0, 10000);
-    Wave w = sig.make_wave(0.001);
+    SinSignal sig(40, 1, 0, 10000);
+    Wave w = sig.make_wave(0.1);
+    w.plot("sin.gpi");
     return 0;
 }
