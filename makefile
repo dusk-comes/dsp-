@@ -8,7 +8,7 @@ $(TARGET) : $(OBJ)
 %.o : %.cpp
 	$(CXX) -c -g -o $@ $<
 
-main.o : main.cpp signal.cpp signal.h
+main.o : main.cpp signal.cpp wave.cpp
 signal.o : signal.cpp signal.h
 wave.o : wave.cpp wave.h
 
