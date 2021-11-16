@@ -1,4 +1,5 @@
 CXX = g++
+CXXFLAGS = -Werror -Wextra -Wall -Wpedantic
 OBJ = main.o signal.o wave.o
 TARGET = dsp
 
@@ -6,7 +7,7 @@ $(TARGET) : $(OBJ)
 	$(CXX) -o $@ $^
 
 %.o : %.cpp
-	$(CXX) -c -g -o $@ $<
+	$(CXX) $(CXXFLAGS) -c -g -o $@ $<
 
 main.o : main.cpp signal.cpp wave.cpp
 signal.o : signal.cpp signal.h
