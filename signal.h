@@ -31,7 +31,7 @@ class SinSignal : public Signal
 
         SinSignal(double freq, double amp=1, double phase=0, double samplerate=11025);
 
-        Wave make_wave(double duration, double start=0);
+        Wave make_wave(double duration);
 
     private:
         double _angel;

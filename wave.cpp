@@ -1,7 +1,6 @@
 #include "wave.h"
 
-Wave::Wave(std::vector<double> &time_span, std::vector<double> &amp_span)
+Wave::Wave(std::vector<double> amps)
 {
-    _time_span = std::move(time_span);
-    _amp_span = std::move(amp_span);
+    _amps= std::move(amps);
 }
