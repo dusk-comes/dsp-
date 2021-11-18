@@ -60,8 +60,6 @@ SquareSignal::SquareSignal(double freq, double amp, double phase, double sampler
 
 Wave SquareSignal::make_wave(double duration)
 {
-    double half_period = 1 / (2 * Signal::freq());
-
     int samples = duration * Signal::samplerate();
     std::vector<double> amps(samples);
     for(auto it = std::begin(amps); it != std::end(amps); ++it)
@@ -72,5 +70,33 @@ Wave SquareSignal::make_wave(double duration)
 
     return Wave(amps, Signal::samplerate());
 }
-   
 
+TriangleSignal::TriangleSignal(double freq, double amp, double phase, double samplerate) :
+    Signal(freq, amp, phase, samplerate),
+    _angel{0}
+{
+    _delta = 2 * M_PI * Signal::freq() / Signal::samplerate();
+}
+
+Wave TriangleSignal::make_wave(double duration)
+{
+    int samples = duration * Signal::samplerate();
+    std::vector<double> amps(samples);
+    double value = 0;
+    for(auto it = std::begin(amps); it != std::end(amps); ++it)
+    {
+        if (std::sin(_angel + Signal::phase())) 
+        {
+            value = std::fmod(_angel + Signal::phase(), M_PI);
+        }
+        else
+        {
+            value -= std::fmod(_angel + Signal::phase(), M_PI);
+        }
+
+        *it = value;
+        _angel += _delta;
+    }
+
+    return amps;
+}
