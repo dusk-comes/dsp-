@@ -32,21 +32,25 @@ double Signal::samplerate()
     return _samplerate;
 }
 
-SinSignal::SinSignal(double freq, double amp, double phase, double samplerate) :
+CoSin::CoSin(std::function<double(double)> func, double freq, double amp, double phase, double samplerate) :
     Signal(freq, amp, phase, samplerate),
-    _angel{0}
+    _angel{phase}
 {
     _delta = 2 * M_PI * Signal::freq() / Signal::samplerate();
+    _func = [func](double arg) {return func(arg);};
 }
 
-Wave SinSignal::make_wave(double duration)
+Wave CoSin::make_wave(double duration)
 {
     int samples = duration * Signal::samplerate();
 
     std::vector<double> amps(samples);
-    std::for_each(std::begin(amps), std::end(amps), [this] (auto &sample) {
-            sample = Signal::amp() * std::sin(_angel + Signal::phase());
+    std::for_each(amps.begin(), amps.end(), [this](double &sample) {
+            sample = Signal::amp() * _func(_angel);
             _angel += _delta;});
+}
 
-    return Wave(amps, Signal::samplerate());
+Sin::Sin(double freq, double amp, double phase, double samplerate) :
+    CoSin(std::sin, freq, amp, phase, samplerate)
+{
 }

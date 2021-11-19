@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include "wave.h"
 
 class Signal
@@ -17,6 +19,8 @@ class Signal
 
         double samplerate();
 
+        virtual Wave make_wave(double duration) = 0;
+
     private:
         double _freq;
         double _amp;
@@ -24,16 +28,25 @@ class Signal
         double _samplerate;
 };
 
-class SinSignal : public Signal
+class CoSin : public Signal
 {
     public:
-        SinSignal() = delete;
+       CoSin() = delete;
 
-        SinSignal(double freq, double amp=1, double phase=0, double samplerate=11025);
+       CoSin(std::function<double(double)> func, double freq, double amp=1, double phase=0, double samplerate=11025);
 
-        Wave make_wave(double duration);
+       Wave make_wave(double duration) override;
 
     private:
-        double _angel;
-        double _delta;
+       double _angel;
+       double _delta;
+       std::function<double(double)> _func;
+};
+
+class Sin : public CoSin
+{
+    public:
+        Sin() = delete;
+
+        Sin(double freq, double amp=1, double phase=0, double samplerate=11025);
 };
