@@ -2,6 +2,7 @@ CXX = g++
 CXXFLAGS = -Werror -Wextra -Wall -Wpedantic
 OBJ = main.o signal.o wave.o
 TARGET = dsp
+ARTEFACTS=*.gpi
 
 $(TARGET) : $(OBJ)
 	$(CXX) -o $@ $^
@@ -15,4 +16,4 @@ wave.o : wave.cpp wave.h
 
 .PHONY : clean
 clean : 
-	rm $(OBJ) $(TARGET)
+	rm $(OBJ) $(TARGET) $(ARTEFACTS)
