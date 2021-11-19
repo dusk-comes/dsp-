@@ -37,29 +37,3 @@ class SinSignal : public Signal
         double _angel;
         double _delta;
 };
-
-class SquareSignal : public Signal
-{
-    public:
-        SquareSignal() = delete;
-
-        SquareSignal(double freq, double amp=1, double phase=0, double samplerate=11025);
-
-        Wave make_wave(double duration);
-    private:
-        double _angel;
-        double _delta;
-};
-
-class TriangleSignal : public Signal
-{
-    public:
-        TriangleSignal() = delete;
-
-        TriangleSignal(double freq, double amp=1, double phase=0, double samplerate=11025);
-
-        Wave make_wave(double duration);
-    private:
-        double _angel;
-        double _delta;
-};
