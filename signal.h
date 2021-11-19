@@ -33,14 +33,16 @@ class CoSin : public Signal
     public:
        CoSin() = delete;
 
-       CoSin(std::function<double(double)> func, double freq, double amp=1, double phase=0, double samplerate=11025);
+       using Func = std::function<double(double)>;
+
+       CoSin(Func func, double freq, double amp=1, double phase=0, double samplerate=11025);
 
        Wave make_wave(double duration) override;
 
     private:
+       Func _func;
        double _angel;
        double _delta;
-       std::function<double(double)> _func;
 };
 
 class Sin : public CoSin
@@ -49,4 +51,12 @@ class Sin : public CoSin
         Sin() = delete;
 
         Sin(double freq, double amp=1, double phase=0, double samplerate=11025);
+};
+
+class Cos : public CoSin
+{
+    public:
+        Cos() = delete;
+
+        Cos(double freq, double amp=1, double phase=0, double samplerate=11025);
 };
