@@ -4,8 +4,8 @@
 int main()
 {
     double freq = 40;
-    Cos sin_sig(freq);
-    Wave sin_wave = sin_sig.make_wave(0.03);
-    sin_wave.plot("cos.gpi");
+    Sin sin_sig(freq, 5, 3.14/2);
+    Wave sin_wave = sin_sig.make_wave(0.1);
+    sin_wave.plot("sin.gpi");
     return 0;
 }

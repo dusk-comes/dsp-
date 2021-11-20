@@ -63,3 +63,29 @@ Cos::Cos(double freq, double amp, double phase, double samplerate) :
     CoSin((double(*)(double))&std::cos, freq, amp, phase, samplerate)
 {
 }
+
+Square::Square(double freq, double amp, double phase, double samplerate) :
+    Signal(freq, amp, phase, samplerate),
+    _angel{phase}
+{
+    _delta = 2 * M_PI * Signal::freq() / Signal::samplerate();
+}
+
+Wave Square::make_wave(double duration)
+{
+    int samples = duration * Signal::samplerate();
+
+    std::vector<double> amps(samples);
+
+    for (double &sample : amps)
+    {
+        double current_postion = std::fmod(_angel, 2.0 * M_PI);
+
+        if (current_postion <= M_PI) sample = Signal::amp();
+        else sample = -Signal::amp();
+
+        _angel += _delta;
+    }
+
+    return Wave(amps);
+}

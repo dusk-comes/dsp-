@@ -60,3 +60,17 @@ class Cos : public CoSin
 
         Cos(double freq, double amp=1, double phase=0, double samplerate=11025);
 };
+
+class Square : public Signal
+{
+    public:
+        Square() = delete;
+
+        Square(double freq, double amp=1, double phase=0, double samplerate=11025);
+
+        Wave make_wave(double duration);
+
+    private:
+       double _angel;
+       double _delta;
+};
