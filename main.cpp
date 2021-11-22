@@ -1,11 +1,14 @@
 #include "signal.h"
 #include "wave.h"
+#include <iostream>
+#include <cstdlib>
 
 int main()
 {
     double freq = 40;
-    Sin sin_sig(freq, 5, 3.14/2);
-    Wave sin_wave = sin_sig.make_wave(0.1);
-    sin_wave.plot("sin.gpi");
+    double duration = 0.1;
+    Triangle signal(freq);
+    Wave wave = signal.make_wave(duration);
+    wave.plot("trg.gpi");
     return 0;
 }
