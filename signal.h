@@ -75,12 +75,12 @@ class Square : public Signal
        double _delta;
 };
 
-class Triangle : public Signal
+class SawTooth : public Signal
 {
     public:
-        Triangle() = delete;
+        SawTooth() = delete;
 
-        Triangle(double freq, double amp=1, double phase=0, double samplerate=11025);
+        SawTooth(double freq, double amp=1, double phase=0, double samplerate=11025);
 
         Wave make_wave(double duration);
 

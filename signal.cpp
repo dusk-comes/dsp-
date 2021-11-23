@@ -90,14 +90,14 @@ Wave Square::make_wave(double duration)
     return Wave(amps);
 }
 
-Triangle::Triangle(double freq, double amp, double phase, double samplerate) :
+SawTooth::SawTooth(double freq, double amp, double phase, double samplerate) :
     Signal(freq, amp, phase, samplerate),
     _angel{phase}
 {
     _delta = Signal::freq() / Signal::samplerate();
 }
 
-Wave Triangle::make_wave(double duration)
+Wave SawTooth::make_wave(double duration)
 {
     int samples = duration * Signal::samplerate();
 

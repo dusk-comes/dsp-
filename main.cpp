@@ -7,7 +7,7 @@ int main()
 {
     double freq = 40;
     double duration = 0.1;
-    Triangle signal(freq);
+    SawTooth signal(freq);
     Wave wave = signal.make_wave(duration);
     wave.plot("trg.gpi");
     return 0;
