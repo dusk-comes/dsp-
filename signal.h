@@ -85,6 +85,6 @@ class SawTooth : public Signal
         Wave make_wave(double duration);
 
     private:
-       double _angel;
-       double _delta;
+       double _timeshift;
+       double _cycles_per_sample;
 };
