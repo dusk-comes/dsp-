@@ -92,9 +92,9 @@ Wave Square::make_wave(double duration)
 
 SawTooth::SawTooth(double freq, double amp, double phase, double samplerate) :
     Signal(freq, amp, phase, samplerate),
-    _angel{phase / (2.0 * M_PI)}
+    _timeshift{phase / (2.0 * M_PI)}
 {
-    _delta = Signal::freq() / Signal::samplerate();
+    _cycles_per_sample = Signal::freq() / Signal::samplerate();
 }
 
 Wave SawTooth::make_wave(double duration)
@@ -103,12 +103,10 @@ Wave SawTooth::make_wave(double duration)
 
     std::vector<double> amps(samples);
 
-    double inter;
     for (double &sample : amps)
     {
-        double frac = std::modf(_angel, &inter);
-        sample = frac;
-        _angel += _delta;
+        sample = Signal::amp() * std::fmod(_timeshift, 1);
+        _timeshift += _cycles_per_sample;
     }
 
     return Wave(amps);
