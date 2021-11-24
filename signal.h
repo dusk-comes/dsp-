@@ -19,7 +19,10 @@ class Signal
 
         double samplerate();
 
-        virtual Wave make_wave(double duration) = 0;
+        Wave make_wave(double duration);
+
+    protected:
+        virtual void compute_signal(std::vector<double> &buffer) = 0;
 
     private:
         double _freq;
@@ -37,7 +40,8 @@ class CoSin : public Signal
 
        CoSin(Func func, double freq, double amp=1, double phase=0, double samplerate=11025);
 
-       Wave make_wave(double duration) override;
+    protected:
+       void compute_signal(std::vector<double> &buffer) override;
 
     private:
        Func _func;
@@ -68,7 +72,8 @@ class Square : public Signal
 
         Square(double freq, double amp=1, double phase=0, double samplerate=11025);
 
-        Wave make_wave(double duration);
+    protected:
+       void compute_signal(std::vector<double> &buffer) override;
 
     private:
        double _angel;
@@ -82,7 +87,8 @@ class SawTooth : public Signal
 
         SawTooth(double freq, double amp=1, double phase=0, double samplerate=11025);
 
-        Wave make_wave(double duration);
+    protected:
+       void compute_signal(std::vector<double> &buffer) override;
 
     private:
        double _timeshift;

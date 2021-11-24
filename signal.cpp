@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <numeric>
 #include <cmath>
+#include <vector>
 
 Signal::Signal(double freq, double amp, double phase, double samplerate) :
     _freq{freq},
@@ -32,6 +33,14 @@ double Signal::samplerate()
     return _samplerate;
 }
 
+Wave Signal::make_wave(double duration)
+{
+    size_t samples = duration * Signal::samplerate();
+    std::vector<double> buffer(samples);
+    compute_signal(buffer);
+    return Wave(buffer);
+}
+
 CoSin::CoSin(Func func, double freq, double amp, double phase, double samplerate) :
     Signal(freq, amp, phase, samplerate),
     _func{func},
@@ -40,18 +49,13 @@ CoSin::CoSin(Func func, double freq, double amp, double phase, double samplerate
     _delta = 2 * M_PI * Signal::freq() / Signal::samplerate();
 }
 
-Wave CoSin::make_wave(double duration)
+void CoSin::compute_signal(std::vector<double> &buffer)
 {
-    int samples = duration * Signal::samplerate();
-
-    std::vector<double> amps(samples);
-    for (double &sample : amps)
+    for (double &sample : buffer)
     {
         sample = Signal::amp() * _func(_angel);
         _angel += _delta;
     }
-
-    return Wave(amps);
 }
 
 Sin::Sin(double freq, double amp, double phase, double samplerate) :
@@ -71,23 +75,14 @@ Square::Square(double freq, double amp, double phase, double samplerate) :
     _delta = 2 * M_PI * Signal::freq() / Signal::samplerate();
 }
 
-Wave Square::make_wave(double duration)
+void Square::compute_signal(std::vector<double> &buffer)
 {
-    int samples = duration * Signal::samplerate();
-
-    std::vector<double> amps(samples);
-
-    for (double &sample : amps)
+    for (double &sample : buffer)
     {
         double current_postion = std::fmod(_angel, 2.0 * M_PI);
-
-        if (current_postion <= M_PI) sample = Signal::amp();
-        else sample = -Signal::amp();
-
+        sample = (current_postion <= M_PI) ? Signal::amp() : -Signal::amp();
         _angel += _delta;
     }
-
-    return Wave(amps);
 }
 
 SawTooth::SawTooth(double freq, double amp, double phase, double samplerate) :
@@ -97,17 +92,11 @@ SawTooth::SawTooth(double freq, double amp, double phase, double samplerate) :
     _cycles_per_sample = Signal::freq() / Signal::samplerate();
 }
 
-Wave SawTooth::make_wave(double duration)
+void SawTooth::compute_signal(std::vector<double> &buffer)
 {
-    int samples = duration * Signal::samplerate();
-
-    std::vector<double> amps(samples);
-
-    for (double &sample : amps)
+    for (double &sample : buffer)
     {
         sample = Signal::amp() * std::fmod(_timeshift, 1);
         _timeshift += _cycles_per_sample;
     }
-
-    return Wave(amps);
 }
