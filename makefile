@@ -1,14 +1,26 @@
 CXX = g++
 CXXFLAGS = -Werror -Wextra -Wall -Wpedantic
-OBJ = main.o signal.o wave.o
+INCLUDE = -I./headers/wave
+
+SOURCEDIR = src
+BUILDDIR = build
+
 TARGET = dsp
-ARTEFACTS=*.gpi
+SOURCES = $(wildcard $(SOURCEDIR)/*/*.cpp)
+OBJECTS = $(patsubst src/%/%.cpp, $(BUILDDIR)/%.o, $(SOURCES))
+ARTEFACTS=*.gpi #maybe should be deleted in later
 
-$(TARGET) : $(OBJ)
-	$(CXX) -o $@ $^
+all : dir $(BUILDDIR)/$(TARGET)
 
-%.o : %.cpp
-	$(CXX) $(CXXFLAGS) -c -g -o $@ $<
+dir :
+	mkdir -p $(BUILDDIR)
+
+
+$(BUILDDIR)/$(TARGET) : $(OBJECTS)
+	$(CXX) $^ -o $@
+
+$(OBJECTS) : $(BUILDDIR)/%.o : $(SOURCES)/%.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -g $< -o $@ 
 
 main.o : main.cpp signal.cpp wave.cpp
 signal.o : signal.cpp signal.h
@@ -16,4 +28,4 @@ wave.o : wave.cpp wave.h
 
 .PHONY : clean
 clean : 
-	rm $(OBJ) $(TARGET) $(ARTEFACTS)
+	rm -rf $(BUILDDIR) $(ARTEFACTS)
