@@ -1,8 +1,9 @@
 #pragma once
 
-#include <functional>
-
 #include "wave.h"
+#include <functional>
+#include <vector>
+
 
 class Signal
 {
@@ -29,83 +30,4 @@ class Signal
         double _amp;
         double _phase;
         double _samplerate;
-};
-
-class CoSin : public Signal
-{
-    public:
-       CoSin() = delete;
-
-       using Func = std::function<double(double)>;
-
-       CoSin(Func func, double freq, double amp=1, double phase=0, double samplerate=11025);
-
-    protected:
-       void compute_signal(std::vector<double> &buffer) override;
-
-    private:
-       Func _func;
-       double _angel;
-       double _delta;
-};
-
-class Sin : public CoSin
-{
-    public:
-        Sin() = delete;
-
-        Sin(double freq, double amp=1, double phase=0, double samplerate=11025);
-};
-
-class Cos : public CoSin
-{
-    public:
-        Cos() = delete;
-
-        Cos(double freq, double amp=1, double phase=0, double samplerate=11025);
-};
-
-class Square : public Signal
-{
-    public:
-        Square() = delete;
-
-        Square(double freq, double amp=1, double phase=0, double samplerate=11025);
-
-    protected:
-       void compute_signal(std::vector<double> &buffer) override;
-
-    private:
-       double _angel;
-       double _delta;
-};
-
-class SawTooth : public Signal
-{
-    public:
-        SawTooth() = delete;
-
-        SawTooth(double freq, double amp=1, double phase=0, double samplerate=11025);
-
-    protected:
-       void compute_signal(std::vector<double> &buffer) override;
-
-    private:
-       double _timeshift;
-       double _cycles_per_sample;
-};
-
-class Triangle : public Signal
-{
-    public:
-        Triangle() = delete;
-
-        Triangle(double freq, double amp=1, double phase=0, double samplerate=11025);
-
-    protected:
-       void compute_signal(std::vector<double> &buffer) override;
-
-    private:
-       double _timeshift;
-       double _cycles_per_sample;
 };

@@ -1,4 +1,4 @@
-#include "signal.h"
+#include "triangle.h"
 #include "wave.h"
 #include <iostream>
 #include <cstdlib>
