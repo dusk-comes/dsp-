@@ -1,22 +1,25 @@
 CXX = g++
-CXXFLAGS = -Werror -Wextra -Wall -Wpedantic
-INCLUDE = -I../../headers
+CXXFLAGS = -Werror -Wextra -Wall -Wpedantic -MMD -MP
+INCLUDES = -I$(HEADERDIR)
 
-SOURCEDIR = src
+HEADERDIR := ./headers
+SOURCEDIR := ./src
 
-TARGET = dsp
 SOURCES := $(wildcard $(SOURCEDIR)/*/*.cpp)
-OBJECTS := $(SOURCES:cpp=o)
+SOURCES += main.cpp
+DEPENDS := $(SOURCES:.cpp=.d)
+OBJECTS := $(SOURCES:.cpp=.o)
+TARGET = dsp
+
+-include $(DEPENDS)
 
 $(TARGET) : $(OBJECTS)
 	$(CXX) $^ -o $@
 
-$(OBJECTS) : %.o : %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -g -c $< -o $@
+%.o : %.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -g -c $< -o $@
 
-wave.o : wave.cpp
-signal.o : signal.cpp
 
 .PHONY : clean
 clean :
-	rm -rf $(OBJECTS)
+	rm -rf $(TARGET) $(OBJECTS) $(DEPENDS)
