@@ -1,20 +1,36 @@
+HEADERDIR := ./headers
+SOURCEDIR := ./src
+LIBDIR := ./lib
+
+TARGET := libdsp.a
+DSP := dsp
+
+SOURCES := $(wildcard $(SOURCEDIR)/*/*.cpp)
+DEPENDS := $(SOURCES:.cpp=.d)
+OBJECTS := $(sort $(SOURCES:.cpp=.o))
+
 CXX = g++
 CXXFLAGS = -Werror -Wextra -Wall -Wpedantic -MMD -MP
 INCLUDES = -I$(HEADERDIR)
+INCLUDELIBS = -L$(LIBDIR)
+LIBS = $(patsubst lib%.a, -l%, $(TARGET))
 
-HEADERDIR := ./headers
-SOURCEDIR := ./src
-
-SOURCES := $(wildcard $(SOURCEDIR)/*/*.cpp)
-SOURCES += main.cpp
-DEPENDS := $(SOURCES:.cpp=.d)
-OBJECTS := $(SOURCES:.cpp=.o)
-TARGET = dsp
+AR = ar
+ARFLAGS = -rusUv
 
 -include $(DEPENDS)
 
-$(TARGET) : $(OBJECTS)
-	$(CXX) $^ -o $@
+$(LIBDIR)/$(TARGET) : $(OBJECTS) | $(LIBDIR)
+	$(AR) $(ARFLAGS) $@ $^
+
+$(LIBDIR) :
+	mkdir $@
+
+$(DSP) : dsp.o | $(LIBDIR)/$(TARGET)
+	$(CXX) -g -o $@ $< -L$(LIBDIR) $(LIBS)
+
+dsp.o : dsp.cpp
+	$(CXX) $(INCLUDES) -o $@ -g -c $<
 
 %.o : %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -g -c $< -o $@
@@ -22,4 +38,8 @@ $(TARGET) : $(OBJECTS)
 
 .PHONY : clean
 clean :
-	rm -rf $(TARGET) $(OBJECTS) $(DEPENDS)
+	@rm -rf $(LIBDIR) $(OBJECTS) $(DEPENDS) $(DSP)
+
+.PHONY : print
+print :
+	@echo $(please)
