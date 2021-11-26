@@ -26,10 +26,10 @@ $(LIBDIR)/$(TARGET) : $(OBJECTS) | $(LIBDIR)
 $(LIBDIR) :
 	mkdir $@
 
-$(DSP) : dsp.o | $(LIBDIR)/$(TARGET)
+$(DSP) : $(DSP).o | $(LIBDIR)/$(TARGET)
 	$(CXX) -g -o $@ $< -L$(LIBDIR) $(LIBS)
 
-dsp.o : dsp.cpp
+$(DSP).o : $(DSP).cpp
 	$(CXX) $(INCLUDES) -o $@ -g -c $<
 
 %.o : %.cpp
