@@ -34,10 +34,6 @@ OBJECTS		:= $(patsubst $(SRCDIR)/%, $(BUILDDIR)/%, $(SOURCES:.$(SRCEXT)=.$(OBJEX
 #Default Make
 all: $(LIBDIR)/$(TARGET) $(BINDIR)/$(DSP)
 
-#directories:
-#	@mkdir -p $(LIBDIR)
-#	@mkdir -p $(BUILDDIR)
-
 clean:
 	rm -rf $(BUILDDIR) $(LIBDIR) $(BINDIR)
 
