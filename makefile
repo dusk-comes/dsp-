@@ -32,11 +32,11 @@ SOURCES 	:= $(shell find $(SRCDIR) -type f -name "*.$(SRCEXT)")
 OBJECTS		:= $(patsubst $(SRCDIR)/%, $(BUILDDIR)/%, $(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 
 #Default Make
-all: directories $(LIBDIR)/$(TARGET) $(BINDIR)/$(DSP)
+all: $(LIBDIR)/$(TARGET) $(BINDIR)/$(DSP)
 
-directories:
-	@mkdir -p $(LIBDIR)
-	@mkdir -p $(BUILDDIR)
+#directories:
+#	@mkdir -p $(LIBDIR)
+#	@mkdir -p $(BUILDDIR)
 
 clean:
 	rm -rf $(BUILDDIR) $(LIBDIR) $(BINDIR)
@@ -45,7 +45,7 @@ clean:
 -include $(OBJECTS:.$(OBJEXT)=.$(DEPEXT))
 
 #Create library
-$(LIBDIR)/$(TARGET): $(OBJECTS)
+$(LIBDIR)/$(TARGET): $(OBJECTS) | $(LIBDIR)
 	$(AR) $(ARFLAGS) $@ $^
 
 #Compile source
@@ -58,9 +58,15 @@ $(BINDIR)/$(DSP) : $(DSP).$(SRCEXT) | $(BINDIR)
 	$(CXX) $(CXXFLAGS) $(INC) -L$(LIBDIR) $(LIB) -c -o $@ $<
 	@cp $(RESDIR)/* $(BINDIR)
 
+$(LIBDIR):
+	@mkdir $@
+
+$(BUILDDIR):
+	@mkdir $@
+
 $(BINDIR):
 	@mkdir $@
 
 resources:
 
-.PHONY: all, directories, clean, resources, $(BINDIR)
+.PHONY: all, directories, clean, resources, $(BINDIR), $(LIBDIR), $(BUILDDIR)
