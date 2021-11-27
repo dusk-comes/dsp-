@@ -1,5 +1,6 @@
-#target
-dsp
-
 #gnuplot file extenstion
 *.gpi
+
+#artefacts
+bin/*
+obj/*

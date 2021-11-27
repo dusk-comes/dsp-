@@ -1,45 +1,66 @@
-HEADERDIR := ./headers
-SOURCEDIR := ./src
-LIBDIR := ./lib
+#cpp compiler & linker
+CPP	 		:= g++
+AR			:= ar
 
-TARGET := libdsp.a
-DSP := dsp
+#Binary program
+TARGET 		:= libdsp.a
+DSP			:= dsp
 
-SOURCES := $(wildcard $(SOURCEDIR)/*/*.cpp)
-DEPENDS := $(SOURCES:.cpp=.d)
-OBJECTS := $(sort $(SOURCES:.cpp=.o))
+#The directories, sources, objects, libraries, dependencies
+SRCDIR		:= src
+INCDIR		:= inc
+BUILDDIR	:= obj
+LIBDIR		:= lib
+BINDIR		:= bin
+RESDIR		:= res
+SRCEXT		:= cpp
+DEPEXT		:= d
+OBJEXT		:= o
 
-CXX = g++
-CXXFLAGS = -Werror -Wextra -Wall -Wpedantic -MMD -MP
-INCLUDES = -I$(HEADERDIR)
-INCLUDELIBS = -L$(LIBDIR)
-LIBS = $(patsubst lib%.a, -l%, $(TARGET))
+#Compiler's options
+CXXFLAGS 	:= -Werror -Wextra -Wall -Wpedantic
+INC 		:= -I$(INCDIR)
+LIB 		:= $(patsubst lib%.a, -l%, $(TARGET))
 
-AR = ar
-ARFLAGS = -rusUv
+#Ar's options
+ARFLAGS 	:= -rusUv
 
--include $(DEPENDS)
+#------------------------------------------------------------------
+#JUST CONTEMPLATE AN ACTION BELOW
+#------------------------------------------------------------------
+SOURCES 	:= $(shell find $(SRCDIR) -type f -name "*.$(SRCEXT)")
+OBJECTS		:= $(patsubst $(SRCDIR)/%, $(BUILDDIR)/%, $(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 
-$(LIBDIR)/$(TARGET) : $(OBJECTS) | $(LIBDIR)
+#Default Make
+all: directories $(LIBDIR)/$(TARGET) $(BINDIR)/$(DSP)
+
+directories:
+	@mkdir -p $(LIBDIR)
+	@mkdir -p $(BUILDDIR)
+
+clean:
+	rm -rf $(BUILDDIR) $(LIBDIR) $(BINDIR)
+
+#Pull in dependecy info for *existing* .o files
+-include $(OBJECTS:.$(OBJEXT)=.$(DEPEXT))
+
+#Create library
+$(LIBDIR)/$(TARGET): $(OBJECTS)
 	$(AR) $(ARFLAGS) $@ $^
 
-$(LIBDIR) :
-	mkdir $@
+#Compile source
+$(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(INC) -MMD -MP -c -o $@ $<
 
-$(DSP) : $(DSP).o | $(LIBDIR)/$(TARGET)
-	$(CXX) -g -o $@ $< -L$(LIBDIR) $(LIBS)
+#Build a Main Program
+$(BINDIR)/$(DSP) : $(DSP).$(SRCEXT) | $(BINDIR)
+	$(CXX) $(CXXFLAGS) $(INC) -L$(LIBDIR) $(LIB) -c -o $@ $<
+	@cp $(RESDIR)/* $(BINDIR)
 
-$(DSP).o : $(DSP).cpp
-	$(CXX) $(INCLUDES) -o $@ -g -c $<
+$(BINDIR):
+	@mkdir $@
 
-%.o : %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -g -c $< -o $@
+resources:
 
-
-.PHONY : clean
-clean :
-	@rm -rf $(LIBDIR) $(OBJECTS) $(DEPENDS) $(DSP)
-
-.PHONY : print
-print :
-	@echo $(please)
+.PHONY: all, directories, clean, resources, $(BINDIR)
