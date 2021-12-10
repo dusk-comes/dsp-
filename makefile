@@ -57,10 +57,7 @@ $(BINDIR)/$(DSP) : $(DSP).$(SRCEXT) | $(BINDIR)
 $(LIBDIR):
 	@mkdir $@
 
-$(BUILDDIR):
-	@mkdir $@
-
 $(BINDIR):
 	@mkdir $@
 
-.PHONY: all, directories, clean, $(BINDIR), $(LIBDIR), $(BUILDDIR)
+.PHONY: all, clean, $(BINDIR), $(LIBDIR)
