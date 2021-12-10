@@ -63,4 +63,4 @@ $(BUILDDIR):
 $(BINDIR):
 	@mkdir $@
 
-.PHONY: all, directories, clean, debug, $(BINDIR), $(LIBDIR), $(BUILDDIR)
+.PHONY: all, directories, clean, $(BINDIR), $(LIBDIR), $(BUILDDIR)
