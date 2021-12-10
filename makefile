@@ -18,7 +18,7 @@ DEPEXT		:= d
 OBJEXT		:= o
 
 #Compiler's options
-CXXFLAGS 	:= -Werror -Wextra -Wall -Wpedantic
+CXXFLAGS 	:= -Werror -Wextra -Wall -Wpedantic -g
 INC 		:= -I$(INCDIR)
 LIB 		:= $(patsubst lib%.a, -l%, $(TARGET))
 
@@ -51,7 +51,7 @@ $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 
 #Build a Main Program
 $(BINDIR)/$(DSP) : $(DSP).$(SRCEXT) | $(BINDIR)
-	$(CXX) $(CXXFLAGS) $(INC) -L$(LIBDIR) $(LIB) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) $(INC) -o $@ $< -L$(LIBDIR) $(LIB)
 	@cp $(RESDIR)/* $(BINDIR)
 
 $(LIBDIR):
@@ -63,4 +63,4 @@ $(BUILDDIR):
 $(BINDIR):
 	@mkdir $@
 
-.PHONY: all, directories, clean, $(BINDIR), $(LIBDIR), $(BUILDDIR)
+.PHONY: all, directories, clean, debug, $(BINDIR), $(LIBDIR), $(BUILDDIR)
