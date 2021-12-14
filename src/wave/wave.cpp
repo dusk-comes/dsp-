@@ -6,7 +6,7 @@
 Wave::Wave(std::vector<double> &amps, double samplerate) :
     _samplerate{samplerate}
 {
-    _amps= std::move(amps);
+    _amps = std::move(amps);
 }
 
 void Wave::plot(const std::string &filename)
@@ -26,4 +26,15 @@ void Wave::plot(const std::string &filename)
     {
         std::cout << "Cannot write the file!" << std::endl;
     }
+}
+
+double Wave::samplerate() const
+{
+    return _samplerate;
+}
+
+p_amps Wave::wave() const
+{
+    auto workaround = &_amps;
+    return std::make_shared<std::vector<double>>(workaround);
 }

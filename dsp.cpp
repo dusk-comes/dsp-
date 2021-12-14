@@ -1,7 +1,9 @@
 #include "triangle.h"
 #include "wave.h"
+#include "player.h"
 #include <iostream>
 #include <cstdlib>
+#include <vector>
 
 int main()
 {
@@ -10,5 +12,7 @@ int main()
     Triangle signal(freq, 2, 3.14);
     Wave wave = signal.make_wave(duration);
     wave.plot("trg.gpi");
+
+    Player player(wave);
     return 0;
 }
