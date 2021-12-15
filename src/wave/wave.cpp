@@ -35,6 +35,5 @@ double Wave::samplerate() const
 
 p_amps Wave::wave() const
 {
-    auto workaround = &_amps;
-    return std::make_shared<std::vector<double>>(workaround);
+    return _amps;
 }

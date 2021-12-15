@@ -5,8 +5,6 @@
 #include <utility>
 #include <memory>
 
-using p_amps = std::shared_ptr<std::vector<double>>;
-
 class Wave
 {
     public:
@@ -18,7 +16,7 @@ class Wave
 
         double samplerate() const;
 
-        p_amps wave() const;
+        std::vector<double> wave() const;
 
     private:
         double _samplerate;
