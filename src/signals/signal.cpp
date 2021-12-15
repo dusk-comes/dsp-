@@ -8,22 +8,22 @@ Signal::Signal(double freq, double amp, double phase, double samplerate) :
 {
 }
 
-double Signal::freq()
+double Signal::freq() const
 {
     return _freq;
 }
 
-double Signal::amp()
+double Signal::amp() const
 {
     return _amp;
 }
 
-double Signal::phase()
+double Signal::phase() const
 {
     return _phase;
 }
 
-double Signal::samplerate()
+double Signal::samplerate() const
 {
     return _samplerate;
 }

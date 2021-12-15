@@ -8,7 +8,7 @@
 class Player
 {
     public:
-        Player() = default;
+        Player() = delete;
 
         Player(const Wave &wave);
 

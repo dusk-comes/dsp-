@@ -12,13 +12,13 @@ class Signal
 
         Signal(double freq, double amp=1, double phase=0, double samplerate=11025);
 
-        double freq();
+        double freq() const;
 
-        double amp();
+        double amp() const;
 
-        double phase();
+        double phase() const;
 
-        double samplerate();
+        double samplerate() const;
 
         Wave make_wave(double duration);
 
