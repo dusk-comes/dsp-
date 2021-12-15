@@ -16,7 +16,7 @@ class Wave
 
         double samplerate() const;
 
-        std::vector<double> wave() const;
+        const std::vector<double> &wave() const;
 
     private:
         double _samplerate;

@@ -33,7 +33,7 @@ double Wave::samplerate() const
     return _samplerate;
 }
 
-p_amps Wave::wave() const
+const std::vector<double> &Wave::wave() const
 {
     return _amps;
 }
