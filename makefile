@@ -8,7 +8,7 @@ DSP			:= dsp
 
 #The directories, sources, objects, libraries, dependencies
 SRCDIR		:= src
-INCDIR		:= inc
+INCDIR		:= inc /usr/include/alsa
 BUILDDIR	:= obj
 LIBDIR		:= lib
 BINDIR		:= bin
@@ -19,7 +19,7 @@ OBJEXT		:= o
 
 #Compiler's options
 CXXFLAGS 	:= -Werror -Wextra -Wall -Wpedantic -g
-INC 		:= -I$(INCDIR)
+INC 		:= $(addprefix -I, $(INCDIR))
 LIB 		:= $(patsubst lib%.a, -l%, $(TARGET))
 
 #Ar's options
