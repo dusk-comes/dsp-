@@ -21,6 +21,7 @@ OBJEXT		:= o
 CXXFLAGS 	:= -Werror -Wextra -Wall -Wpedantic -g
 INC 		:= $(addprefix -I, $(INCDIR))
 LIB 		:= $(patsubst lib%.a, -l%, $(TARGET))
+LIB			+= -lasound			#external libraries
 
 #Ar's options
 ARFLAGS 	:= -rusUv

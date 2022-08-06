@@ -20,8 +20,7 @@ class Player
         void init();
 
     private:
-        size_t _position;
-        size_t _buffer_size;
+        const size_t _buffer_size;
         const double _samplerate;
         const std::vector<double> &_data;
 };
