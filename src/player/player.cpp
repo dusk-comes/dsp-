@@ -19,7 +19,7 @@ Player::Player(const Wave &wave) :
 
 void Player::init()
 {
-    std::array<double, 512>  _buffer;
+    std::array<frame, 512>  _buffer;
 
     char const *device = "default";			/* playback device */
     int err;

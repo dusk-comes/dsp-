@@ -1,9 +1,10 @@
 #pragma once
 
+#include "alias.h"
 #include "wave.h"
+
 #include <functional>
 #include <vector>
-
 
 class Signal
 {
@@ -23,7 +24,7 @@ class Signal
         Wave make_wave(double duration);
 
     protected:
-        virtual void compute_signal(std::vector<double> &buffer) = 0;
+        virtual void compute_signal(std::vector<frame> &buffer) = 0;
 
     private:
         double _freq;

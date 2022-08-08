@@ -8,9 +8,9 @@ SawTooth::SawTooth(double freq, double amp, double phase, double samplerate) :
     _cycles_per_sample = Signal::freq() / Signal::samplerate();
 }
 
-void SawTooth::compute_signal(std::vector<double> &buffer)
+void SawTooth::compute_signal(std::vector<frame> &buffer)
 {
-    for (double &sample : buffer)
+    for (frame &sample : buffer)
     {
         sample = Signal::amp() * std::fmod(_timeshift, 1);
         _timeshift += _cycles_per_sample;

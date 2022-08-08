@@ -8,10 +8,10 @@ Triangle::Triangle(double freq, double amp, double phase, double samplerate) :
     _cycles_per_sample = Signal::freq() / Signal::samplerate();
 }
 
-void Triangle::compute_signal(std::vector<double> &buffer)
+void Triangle::compute_signal(std::vector<frame> &buffer)
 {
     double halfperiod = 0.5;
-    for (double &sample : buffer)
+    for (frame &sample : buffer)
     {
         double value = std::fmod(_timeshift, 1);
         value = (value <= halfperiod) ? value : 1 - value;

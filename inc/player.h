@@ -1,8 +1,9 @@
 #pragma once
 
+#include "alias.h"
+#include "wave.h"
 
 #include <cstddef>
-#include "wave.h"
 #include <memory>
 #include <vector>
 
@@ -22,5 +23,5 @@ class Player
     private:
         const size_t _buffer_size;
         const double _samplerate;
-        const std::vector<double> &_data;
+        const std::vector<frame> &_data;
 };

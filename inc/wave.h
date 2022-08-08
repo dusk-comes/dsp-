@@ -5,20 +5,22 @@
 #include <utility>
 #include <memory>
 
+using frame = float;
+
 class Wave
 {
     public:
         Wave() = default;
 
-        Wave(std::vector<double> &amps, double samplerate=11025);
+        Wave(std::vector<frame> &amps, double samplerate=11025);
 
         void plot(const std::string &filename);
 
         double samplerate() const;
 
-        const std::vector<double> &wave() const;
+        const std::vector<frame> &wave() const;
 
     private:
         double _samplerate;
-        std::vector<double> _amps;
+        std::vector<frame> _amps;
 };

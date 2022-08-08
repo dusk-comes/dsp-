@@ -9,9 +9,9 @@ CoSin::CoSin(Func func, double freq, double amp, double phase, double samplerate
     _delta = 2 * M_PI * Signal::freq() / Signal::samplerate();
 }
 
-void CoSin::compute_signal(std::vector<double> &buffer)
+void CoSin::compute_signal(std::vector<frame> &buffer)
 {
-    for (double &sample : buffer)
+    for (frame &sample : buffer)
     {
         sample = Signal::amp() * _func(_angel);
         _angel += _delta;

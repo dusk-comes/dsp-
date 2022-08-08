@@ -3,7 +3,7 @@
 #include <iostream>
 #include <iomanip>
 
-Wave::Wave(std::vector<double> &amps, double samplerate) :
+Wave::Wave(std::vector<frame> &amps, double samplerate) :
     _samplerate{samplerate}
 {
     _amps = std::move(amps);
@@ -33,7 +33,7 @@ double Wave::samplerate() const
     return _samplerate;
 }
 
-const std::vector<double> &Wave::wave() const
+const std::vector<frame> &Wave::wave() const
 {
     return _amps;
 }
