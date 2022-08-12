@@ -28,9 +28,9 @@ double Signal::samplerate() const
     return _samplerate;
 }
 
-Wave Signal::make_wave(double duration)
+Wave Signal::make_wave(seconds time)
 {
-    size_t samples = duration * Signal::samplerate();
+    size_t samples = time.count() * Signal::samplerate();
     std::vector<frame> buffer(samples);
     compute_signal(buffer);
     return Wave(buffer);

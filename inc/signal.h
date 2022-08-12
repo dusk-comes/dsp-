@@ -5,6 +5,7 @@
 
 #include <functional>
 #include <vector>
+#include <chrono>
 
 class Signal
 {
@@ -21,7 +22,7 @@ class Signal
 
         double samplerate() const;
 
-        Wave make_wave(double duration);
+        Wave make_wave(seconds time);
 
     protected:
         virtual void compute_signal(std::vector<frame> &buffer) = 0;
