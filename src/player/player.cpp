@@ -17,7 +17,7 @@ Player::Player(const Wave &wave) :
 {
 }
 
-void Player::init()
+void Player::play()
 {
     std::array<frame, 512>  _buffer;
 
@@ -34,7 +34,7 @@ void Player::init()
 	                              SND_PCM_FORMAT_U8,
 	                              SND_PCM_ACCESS_RW_INTERLEAVED,
 	                              1,
-	                              48000,
+	                              11025,
 	                              1,
 	                              500000)) < 0) {	/* 0.5sec */
 		printf("Playback open error: %s\n", snd_strerror(err));
@@ -58,6 +58,9 @@ void Player::init()
         {
             std::cout << "Short write (epected " << _buffer.size() << ", wrote " << frames;
         }
+
+        std::advance(dt_i, copied_frames);
+        _buffer.fill(0.);
     }
 
     snd_pcm_close(handle);

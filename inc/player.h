@@ -18,7 +18,7 @@ class Player
 
         Player(const Wave &wave);
 
-        void init();
+        void play();
 
     private:
         const size_t _buffer_size;

@@ -17,6 +17,6 @@ int main()
     wave.plot("sin.gpi");
 
     Player player(wave);
-    player.init();
+    player.play();
     return 0;
 }
