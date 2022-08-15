@@ -11,7 +11,6 @@
 #include <iostream>
 
 Player::Player(const Wave &wave) :
-    _buffer_size{512},
     _samplerate(wave.samplerate()),
     _data(wave.wave())
 {
@@ -44,7 +43,7 @@ void Player::play()
     for (auto dt_i = _data.cbegin(); dt_i != _data.cend(); )
     {
         size_t left_data = std::distance(dt_i, _data.end());
-        size_t copied_frames = (left_data > _buffer_size) ? _buffer_size : left_data;
+        size_t copied_frames = (left_data > _buffer.size()) ? _buffer.size() : left_data;
         std::copy_n(dt_i, copied_frames, _buffer.begin());
         frames = snd_pcm_writei(handle, _buffer.data(), _buffer.size());
 

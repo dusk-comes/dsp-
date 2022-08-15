@@ -21,7 +21,7 @@ class Player
         void play();
 
     private:
-        const size_t _buffer_size;
+        std::array<frame, 512> _buffer;
         const double _samplerate;
         const std::vector<frame> &_data;
 };
