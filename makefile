@@ -38,6 +38,12 @@ all: $(LIBDIR)/$(TARGET) $(BINDIR)/$(DSP)
 clean:
 	rm -rf $(BUILDDIR) $(LIBDIR) $(BINDIR)
 
+plot:
+	./bin/plot.sh *.gpi
+
+run:
+	./bin/dsp
+
 #Pull in dependecy info for *existing* .o files
 -include $(OBJECTS:.$(OBJEXT)=.$(DEPEXT))
 
