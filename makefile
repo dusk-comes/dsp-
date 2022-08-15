@@ -56,9 +56,13 @@ $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $(INC) -MMD -MP -c -o $@ $<
 
-#Build a Main Program
-$(BINDIR)/$(DSP) : $(DSP).$(SRCEXT) | $(BINDIR)
-	$(CXX) $(CXXFLAGS) $(INC) -o $@ $< -L$(LIBDIR) $(LIB)
+#Compile executable
+$(BUILDDIR)/$(DSP).$(OBJEXT) :
+	$(CXX) $(CXXFLAGS) $(INC) -c $(DSP).$(SRCEXT) -o $@
+
+#Link executable
+$(BINDIR)/$(DSP): $(BUILDDIR)/$(DSP).$(OBJEXT) | $(BINDIR)
+	$(CXX) -o $@ $< -L$(LIBDIR) $(LIB)
 	@cp $(RESDIR)/* $(BINDIR)
 
 $(LIBDIR):
