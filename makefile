@@ -35,8 +35,6 @@ OBJECTS		:= $(patsubst $(SRCDIR)/%, $(BUILDDIR)/%, $(SOURCES:.$(SRCEXT)=.$(OBJEX
 #Default Make
 all: $(LIBDIR)/$(TARGET) $(BINDIR)/$(DSP)
 
-compile: $(BUILDDIR)/%.$(OBJEXT) $(BUILDDIR)/$(DSP).$(OBJEXT)
-
 clean:
 	rm -rf $(BUILDDIR) $(LIBDIR) $(BINDIR)
 
@@ -73,4 +71,4 @@ $(LIBDIR):
 $(BINDIR):
 	@mkdir -p $@
 
-.PHONY: all, clean, $(BINDIR), $(LIBDIR)
+.PHONY: all, clean, $(BINDIR), $(LIBDIR), $(BINDIR)/$(DSP)
