@@ -18,7 +18,6 @@ Player::Player(const Wave &wave) :
 
 void Player::play()
 {
-    std::array<frame, 512>  _buffer;
 
     char const *device = "default";			/* playback device */
     int err;
@@ -30,7 +29,7 @@ void Player::play()
 		exit(EXIT_FAILURE);
 	}
 	if ((err = snd_pcm_set_params(handle,
-	                              SND_PCM_FORMAT_U8,
+	                              SND_PCM_FORMAT_FLOAT_LE,
 	                              SND_PCM_ACCESS_RW_INTERLEAVED,
 	                              1,
 	                              11025,
