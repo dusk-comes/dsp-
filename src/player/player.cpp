@@ -52,9 +52,9 @@ void Player::play()
             std::cout << "snd_pcm_writei failed: " << snd_strerror(frames) << '\n';
         }
 
-        if (frames > 0 && copied_frames < _buffer.size())
+        if (frames > 0 && frames < (long) _buffer.size())
         {
-            std::cout << "Short write (epected " << _buffer.size() << ", wrote " << frames;
+            std::cout << "Short write (epected " << _buffer.size() << ", wrote " << frames << ")\n";
         }
 
         std::advance(dt_i, copied_frames);
